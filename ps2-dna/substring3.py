@@ -1,6 +1,27 @@
 def longest_substring(s, t):
     """Finds the longest substring that occurs in both s and t"""
     best = ''            
+    # Find the lengths of s and t
+    s_len, t_len = len(s), len(t)
+
+    # Set the lower bound of the substring length to 0, and the upper bound to the minimum length of s and t
+    low, high = 0, min(s_len, t_len)
+    while low <= high:
+        
+        # Choose a substring length to test, halfway between the lower and upper bounds
+        mid = (low + high) // 2
+        # Check if there is a common substring of length mid using the k_substring function
+        substr = k_substring(s, t, mid)
+
+        # If there is a common substring of length mid, update the lower bound to mid + 1, and update the best substring
+        if substr:
+            best = substr
+            low = mid + 1
+        # Otherwise, update the upper bound to mid - 1
+        else:
+            high = mid - 1
+
+    # Return the best substring found
     return best
 
 def k_substring(s, t, k):
